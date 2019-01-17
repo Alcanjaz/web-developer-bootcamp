@@ -1,0 +1,30 @@
+body {
+    background: url(https://images.unsplash.com/photo-1482434368596-fbd06cae4f89?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=c29b9baf9f1e75fa88c392c61973e2dd&auto=format&fit=crop&w=1534&q=80);
+    background-size: cover;
+    background-position-y: 35%;
+}
+#content {
+    text-align: center;
+    padding-top: 15%;
+    color: white;
+}
+html{
+    height: 100%;
+}
+h1{
+    font-family: 'Spicy Rice', cursive;
+    font-size: 400%;
+}
+h2{
+    font-family: 'Open Sans Condensed', sans-serif;
+}
+
+hr{
+    width: 400px;
+    border-top: 1px solid #fbfbfb;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+
+.navbar-right{
+    text-align: right;
+}
