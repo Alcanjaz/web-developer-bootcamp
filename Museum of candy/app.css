@@ -21,3 +21,20 @@ body{
     font-size: 1.5rem;
     font-weight: 100;
 }
+
+#headlineGroup span {
+    color: #ea1c2c;
+}
+
+#headlineGroup h1 {
+    font-weight: 100;
+    font-size: 4rem;
+}
+
+@media (max-width: 1200px){
+    #headlineGroup h1 {
+        font-weight: 100;
+        font-size: 3rem;
+    }
+    
+}
