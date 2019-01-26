@@ -30,7 +30,7 @@ resetButton.addEventListener('click', ()=> {
 
    //Reset Properties
    resetButton.textContent = "New colors";
-   h1.style.backgroundColor = "#232323";
+   h1.style.backgroundColor = "steelblue";
    messageDislay.textContent = "";
     
 
@@ -89,6 +89,16 @@ function randomColor(){
 
 function changeDifficulty(btnId) {
     squareNumber = btnId === 'hardBtn' ? 6 : 3;
+
+    if (btnId === 'hardBtn'){
+        hardBtn.classList.add('selected')
+        easyBtn.classList.remove('selected');
+    } else{
+        easyBtn.classList.add('selected');
+        hardBtn.classList.remove('selected')
+
+    }
+    
     colors = generateRandomColors(squareNumber);
     pickedColor = pickColor();
     colorDisplay.textContent = pickedColor;
