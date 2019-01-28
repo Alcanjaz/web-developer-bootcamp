@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>jQuery Events</title>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+<body>
+
+<h1>jQuery Events</h1>
+<h1>jQuery Events</h1>
+<h1>jQuery Events</h1>
+
+<input type="text">
+
+<button>Don't Click Me</button>
+<button>Sersiouly Don't Click Me</button>
+<button>This is your last warning!</button>
+
+<script>
+
+	//click
+	$("button").click(function(){
+		const text = $(this).text();
+		$(this).css("background-color", "pink");
+		console.log(`You clicked ${text}`);
+	});
+
+	//keypress
+	$("input").keypress((event)=>console.log(`you pressed the ${event.charCode} key`));
+	$("input").keypress((event)=>{
+		if(event.keyCode===13) alert('you pressed the enter :O');
+	});
+	
+	//on
+	$("h1").on("click", function() {
+		$(this).css("color", "purple");
+	});
+	$("button").on("mouseenter", function() {
+	console.log('get out of here! >:(');
+	$(this).css("font-weight", "bold");
+	});
+		
+	
+</script>
+
+</body>
+</html>
