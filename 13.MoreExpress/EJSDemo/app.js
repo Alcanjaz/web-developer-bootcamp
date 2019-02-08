@@ -1,8 +1,11 @@
 const express = require('express');
 const app = express();
 
+app.use(express.static('public'));
+app.set("view engine", "ejs");
+
 app.get("/", (req, res) => {
-    res.render("home.ejs");
+    res.render("home");
 });
 
 app.get("/fallinlovewith/:thing", (req, res) => {
@@ -17,7 +20,7 @@ app.get("/posts", (req, res) => {
         {title: "Can you believe this pomsky?", author: "Colt"}
     ];
 
-    res.render("posts.ejs", {posts: posts});
+    res.render("posts", {posts: posts});
 });
 
 

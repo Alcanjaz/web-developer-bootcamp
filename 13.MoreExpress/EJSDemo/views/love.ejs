@@ -1,15 +1,21 @@
-<style>
-    h1 {
-        text-transform: capitalize;
-    }
-</style>
-
-<h1>You fell in love with: <%= thingVar %></h1>
-
-<% if(thingVar.toLowerCase() === 'macri') { %>
-    <p>GOOD CHOICE!!! MACRI IS THE BEST</p>
-<% } else {%>
-    <p>Bad choice! You should have said Macri!</p>
-<% } %>
-
-<p>P.S. this is the love.ejs file!</p>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>DEMO APP</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/app.css">
+    </head>
+    <body>
+    <h1>You fell in love with: <%= thingVar %></h1>
+    
+    <% if(thingVar.toLowerCase() === 'macri') { %>
+        <p>GOOD CHOICE!!! MACRI IS THE BEST</p>
+    <% } else {%>
+        <p>Bad choice! You should have said Macri!</p>
+    <% } %>
+    
+    <p>P.S. this is the love.ejs file!</p>
+    
+    </body>
+</html>
