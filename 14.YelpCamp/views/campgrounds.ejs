@@ -1,10 +1,14 @@
 <%include partials/header%>
-        <h1>This is the campgrounds page!</h1>
-
+        
+<h1>This is the campgrounds page!</h1>
+<br>
+<a href="/campgrounds/new" class="btn btn-secondary">Add New Campground</a>
+<br>
+<br>
         <%campgrounds.forEach(e => {%>
-            <div>
+            <div class="container">
                 <p><%=e.name%></p>
-                <img src=<%=e.image%>>
+                <img class="img-fluid rounded" alt="Responsive image" src=<%=e.image%>>
             </div>
         <%})%>
 
