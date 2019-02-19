@@ -1,6 +1,8 @@
 img {
     width: 270px;
     height: auto;
+}
+
+.card, nav{ 
     margin-bottom: 10px;
-    margin-top: 0;
 }
