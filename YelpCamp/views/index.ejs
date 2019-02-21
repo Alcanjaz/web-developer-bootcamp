@@ -15,8 +15,11 @@
         <%campgrounds.forEach(e => {%>
             <div class="col-md-3 col-sm-6">
                 <div class="card">
-                    <img class="card-img-top" alt="Card image cap" src=<%=e.image%>>
+                    <img class="card-img-top" src="<%=e.image%>">
                     <h5 class="card-title"><%=e.name%></h5>
+                    <p>
+                        <a href="/campgrounds/<%=e._id%>" class="btn btn-primary">More Info</a>
+                    </p>
                 </div>
             </div>
         <%})%>

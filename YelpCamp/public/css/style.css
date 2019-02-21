@@ -1,4 +1,9 @@
-img {
+img{
+    width: 540px;
+    height: auto;
+}
+
+img .card-image-top{
     width: 270px;
     height: auto;
 }
