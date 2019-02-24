@@ -1,0 +1,16 @@
+<%include ./partials/header%>
+<div class="ui main text container raised segment">
+<h4 class="ui huge header"><%=blog.title%></h4> 
+    <div class="image">
+        <img class="ui fluid image" src="<%=blog.image%>">
+    </div>
+    <div class="item">
+        <div class="content">
+            <h4 class="ui header"><%=blog.created.toDateString()%></h4>
+        </div>
+        <div class="description">
+            <p><%=blog.body%></p>  
+        </div>
+    </div>
+</div>
+<%include ./partials/footer%>
