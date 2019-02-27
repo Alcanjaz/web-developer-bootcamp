@@ -3,27 +3,13 @@ const app = express();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const Campground = require('./models/campground');
-
+const seedDB = require('./seeds');
 
 mongoose.connect('mongodb://localhost/yelp_camp', {useNewUrlParser: true});
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended: true}));
-app.set("view engine", "ejs");
-
-
-// Campground.create(
-//     {
-//     name: "Granite Hill", 
-//     image: "https://source.unsplash.com/XJuhZqEE4Go",
-//     description: "This is a huge granite hill, no bathrooms. No water. Beautiful granite!"
-//     }, (err, campground) => {
-//         if(err){
-//             console.log(err);
-//         } else {
-//             console.log("Newly created campground!!");
-//             console.log(campground);
-//         }
-//     });
+app.set("view engine", "ejs"); 
+seedDB();
 
 app.get("/", (req, res) => {
     res.render("landing");
@@ -36,7 +22,7 @@ app.get("/campgrounds", (req, res) => {
         if(err){
             console.log(err);
         } else {
-            res.render("index", {campgrounds: allCampgrounds});
+            res.render("campgrounds/index", {campgrounds: allCampgrounds});
         }
     });
 });
@@ -61,21 +47,30 @@ app.post("/campgrounds", (req, res) => {
 
 //NEW - show form to add a new campground
 app.get("/campgrounds/new", function(req, res){
-   res.render("new.ejs"); 
+   res.render("campgrounds/new.ejs"); 
 });
 
 
 //SHOW - shows more info about one campground
 app.get("/campgrounds/:id", (req, res) => {
     //find campground with the provided id
-    Campground.findById(req.params.id, (err, foundCampground) => {
+    Campground.findById(req.params.id).populate("comments").exec((err, foundCampground) => {
         if(err){
             console.log(err)
         } else {
+            console.log(foundCampground);
             //render show template with that campground
-            res.render("show", {campground: foundCampground});
+            res.render("campgrounds/show", {campground: foundCampground});
         }
     });
+});
+
+//================================
+//COMMENTS ROUTES
+//================================
+
+app.get("/campgrounds/:id/comments/new", (req, res) => {
+    res.render("comments/new");
 });
 
 
