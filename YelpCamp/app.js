@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const Campground = require('./models/campground');
 
 
 mongoose.connect('mongodb://localhost/yelp_camp', {useNewUrlParser: true});
@@ -9,14 +10,6 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 
-//Schema setup
-const campgroundSchema = new mongoose.Schema({
-    name: String,
-    image: String,
-    description: String
-});
-
-const Campground = mongoose.model("Campground", campgroundSchema);
 
 // Campground.create(
 //     {
@@ -31,11 +24,6 @@ const Campground = mongoose.model("Campground", campgroundSchema);
 //             console.log(campground);
 //         }
 //     });
-
-
-const campgrounds = [
-    {name: "Mountain Goat's Rest", image: "https://source.unsplash.com/WaLH-jZVVKE"}
-];
 
 app.get("/", (req, res) => {
     res.render("landing");
