@@ -47,7 +47,7 @@ app.post("/campgrounds", (req, res) => {
 
 //NEW - show form to add a new campground
 app.get("/campgrounds/new", function(req, res){
-   res.render("campgrounds/new.ejs"); 
+   res.render("campgrounds/new"); 
 });
 
 
@@ -70,7 +70,14 @@ app.get("/campgrounds/:id", (req, res) => {
 //================================
 
 app.get("/campgrounds/:id/comments/new", (req, res) => {
-    res.render("comments/new");
+    //find campground by id
+    Campground.findById(req.params.id, (err, campground) => {
+        if(err){
+            console.log(err);
+        } else {
+            res.render("comments/new", {campground: campground});
+        }
+    });
 });
 
 
