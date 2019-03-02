@@ -1,16 +1,38 @@
-const express = require('express');
-const app = express();
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-const Campground = require('./models/campground');
-const Comment = require('./models/comment');
-const seedDB = require('./seeds');
+const express           = require('express');
+const bodyParser        = require('body-parser');
+const mongoose          = require('mongoose');
+const passport          = require('passport');
+const localStrategy     = require('passport-local');
+const Campground        = require('./models/campground');
+const Comment           = require('./models/comment');
+const User              = require('./models/user');
+const seedDB            = require('./seeds');
 
-mongoose.connect('mongodb://localhost/yelp_camp', {useNewUrlParser: true});
+const app = express();
+
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs"); 
+
+mongoose.connect('mongodb://localhost/yelp_camp', {useNewUrlParser: true});
 seedDB();
+
+//PASSPORT CONFIGURATION 
+app.use(require("express-session")({
+    secret: "Once again Macri it's the best cat!",
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new localStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+app.use((req, res, next) => {
+    res.locals.currentUser = req.user;
+    next();
+})
 
 app.get("/", (req, res) => {
     res.render("landing");
@@ -47,7 +69,7 @@ app.post("/campgrounds", (req, res) => {
 });
 
 //NEW - show form to add a new campground
-app.get("/campgrounds/new", function(req, res){
+app.get("/campgrounds/new", isLoggedIn, function(req, res){
    res.render("campgrounds/new"); 
 });
 
@@ -59,7 +81,6 @@ app.get("/campgrounds/:id", (req, res) => {
         if(err){
             console.log(err)
         } else {
-            console.log(foundCampground);
             //render show template with that campground
             res.render("campgrounds/show", {campground: foundCampground});
         }
@@ -70,7 +91,7 @@ app.get("/campgrounds/:id", (req, res) => {
 //COMMENTS ROUTES
 //================================
 
-app.get("/campgrounds/:id/comments/new", (req, res) => {
+app.get("/campgrounds/:id/comments/new", isLoggedIn, (req, res) => {
     //find campground by id
     Campground.findById(req.params.id, (err, campground) => {
         if(err){
@@ -81,7 +102,7 @@ app.get("/campgrounds/:id/comments/new", (req, res) => {
     });
 });
 
-app.post("/campgrounds/:id/comments", (req, res) => {
+app.post("/campgrounds/:id/comments", isLoggedIn, (req, res) => {
     //lookup campground using ID
     Campground.findById(req.params.id, (err, campground) => {
         if(err) {
@@ -102,10 +123,50 @@ app.post("/campgrounds/:id/comments", (req, res) => {
                 }
             });
         }
-    })
+    });
 });
 
+//Auth Routes
+app.get("/register", (req, res) => {
+    res.render("register");
+});
+//handle sign up logic
+app.post("/register", (req, res) => {
+    const newUser = new User({username: req.body.username});
+    User.register(newUser, req.body.password, (err, user) => {
+        if(err) {
+            console.log(err);
+            return res.render("register");
+        }
+        passport.authenticate("local")(req, res, () => {
+            res.redirect("/campgrounds");
+        });
+    });
+});
 
+//show login form
+app.get("/login", (req, res) => {
+    res.render("login");
+});
+//handling login logic
+app.post("/login", passport.authenticate("local", {
+    successRedirect:"/campgrounds",
+    failureRedirect:"/login"
+}), (req, res) => {
+});
+
+//logout route
+app.get("/logout", (req, res) =>{
+    req.logOut();
+    res.redirect("/");
+});
+
+function isLoggedIn(req, res, next){
+    if(req.isAuthenticated()){
+        return next();
+    }
+    res.redirect("/login");
+}
 
 app.listen(process.env.PORT || 3000, process.env.IP || null, () => {
     console.log('The YelpCamp Server has Started!');
