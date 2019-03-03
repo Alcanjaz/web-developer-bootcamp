@@ -20,13 +20,18 @@ router.post("/", (req, res) => {
     const name = req.body.name;
     const image = req.body.image;
     const desc = req.body.description;
-    const newCampground = {name: name, image: image, description: desc}
+    const author = {
+        id: req.user._id,
+        username: req.user.username
+    };
+    const newCampground = {name: name, image: image, description: desc, author: author};
     //Create a new campground and save to DB
     Campground.create(newCampground, (err, newlyCreated) => {
         if(err){
             console.log(err);
         } else {
             //redirect back to campgrounds page
+            console.log(newlyCreated);
             res.redirect("/campgrounds");
         }
     })
