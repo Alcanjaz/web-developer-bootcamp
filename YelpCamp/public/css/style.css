@@ -11,3 +11,7 @@ img .card-image-top{
 .card, nav{ 
     margin-bottom: 10px;
 }
+
+#delete-form{
+    display: inline;
+}
