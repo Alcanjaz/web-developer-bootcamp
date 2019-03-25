@@ -2,6 +2,7 @@ const express           = require('express');
 const bodyParser        = require('body-parser');
 const mongoose          = require('mongoose');
 const passport          = require('passport');
+const flash             = require('connect-flash');
 const localStrategy     = require('passport-local');
 const methodOverride    = require('method-override');
 const Campground        = require('./models/campground');
@@ -20,6 +21,7 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride("_method"));
 app.set("view engine", "ejs"); 
+app.use(flash());
 
 mongoose.connect('mongodb://localhost/yelp_camp', {useNewUrlParser: true});
 //Seed the database
