@@ -20,3 +20,5 @@ to [Colt Steele](https://www.linkedin.com/in/coltsteele/) for all. This course w
 * Server-Side Rendering
 * Jquery
 * MongoDB and Mongoose
+* Git
+* Heroku
